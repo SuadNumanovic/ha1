@@ -107,6 +107,36 @@ class CalculatorTest {
 
         assertEquals(expected, actual);
     }
+    @Test
+    @DisplayName("should follow multiplication before addition")
+    void testOperatorPrecedence() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(2);              // 2
+        calc.pressBinaryOperationKey("+");  // +
+        calc.pressDigitKey(3);              // 3
+        calc.pressBinaryOperationKey("x");  // x
+        calc.pressDigitKey(4);              // 4
+        calc.pressEqualsKey();              // =
+
+        String expected = "14";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+    @Test
+    @DisplayName("should display Error when inverting zero")
+    void testInverseOfZero() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(0);              // Bildschirm: 0
+        calc.pressUnaryOperationKey("1/x"); // Rechnet 1 / 0 → sollte "Error" sein
+
+        String expected = "Error";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
 
 }
 
