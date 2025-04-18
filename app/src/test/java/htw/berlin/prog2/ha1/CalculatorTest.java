@@ -119,7 +119,24 @@ class CalculatorTest {
         calc.pressDigitKey(4);              // 4
         calc.pressEqualsKey();              // =
 
-        String expected = "14";
+        String expected = "14";             // Weil: 3 x 4 = 12, dann 2 + 12 = 14
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+    @Test
+    @DisplayName("should repeat the last operation when equals is pressed multiple times")
+    void testRepeatEqualsKey() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(2);              // 2
+        calc.pressBinaryOperationKey("+");  // +
+        calc.pressDigitKey(3);              // 3
+        calc.pressEqualsKey();              // = → 5
+        calc.pressEqualsKey();              // = → 8 (5 + 3)
+        calc.pressEqualsKey();              // = → 11 (8 + 3)
+
+        String expected = "11";
         String actual = calc.readScreen();
 
         assertEquals(expected, actual);
